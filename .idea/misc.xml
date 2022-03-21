@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/background_miscellaneous.xml" value="0.126" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/background_note_color2.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/background_note_color8.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/background_note_color9.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_add_actions.xml" value="0.126" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_add_outline.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_delete.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_done.xml" value="0.126" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_edit.xml" value="0.12" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_fab_add_note.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_image.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_material_dialog_cancel.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_material_dialog_delete.xml" value="0.126" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_menu_rate.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/ic_more.xml" value="0.126" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/drawable/illustration_notes.xml" value="0.126" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/font/poppins.xml" value="0.21770833333333334" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-hdpi/activity_create_note.xml" value="0.16" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-hdpi/activity_main.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-hdpi/activity_splash_screen.xml" value="0.2714285714285714" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-hdpi/item_container_note.xml" value="0.2714285714285714" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-hdpi/layout_add_url.xml" value="0.2714285714285714" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-mdpi/activity_create_note.xml" value="0.64375" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-mdpi/activity_main.xml" value="0.67" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-mdpi/activity_splash_screen.xml" value="0.5802816901408451" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-mdpi/item_container_note.xml" value="0.7101449275362319" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-mdpi/layout_add_url.xml" value="0.8812949640287769" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-mdpi/layout_miscellaneous.xml" value="0.5179704016913319" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xhdpi/activity_create_note.xml" value="0.5366412213740458" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xhdpi/activity_main.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xhdpi/activity_splash_screen.xml" value="0.5366412213740458" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xhdpi/item_container_note.xml" value="0.5366412213740458" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xhdpi/layout_add_url.xml" value="0.5366412213740458" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxhdpi/activity_create_note.xml" value="0.19074074074074074" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxhdpi/activity_main.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxhdpi/activity_splash_screen.xml" value="0.3605128205128205" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxhdpi/item_container_note.xml" value="0.3605128205128205" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxhdpi/layout_add_url.xml" value="0.3605128205128205" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxhdpi/layout_miscellaneous.xml" value="0.3605128205128205" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxxhdpi/activity_create_note.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxxhdpi/activity_main.xml" value="0.1701388888888889" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxxhdpi/activity_splash_screen.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxxhdpi/item_container_note.xml" value="0.2714285714285714" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout-xxxhdpi/layout_add_url.xml" value="0.2714285714285714" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout/activity_create_note.xml" value="0.75" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout/activity_main.xml" value="1.0606060606060606" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout/activity_splash_screen.xml" value="0.5802816901408451" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout/item_container_note.xml" value="0.7101449275362319" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout/layout_add_url.xml" value="0.9760956175298805" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/layout/layout_miscellaneous.xml" value="0.7903225806451613" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/menu/main_menu.xml" value="0.3605128205128205" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/menu/note_menu.xml" value="0.33" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/menu/quick_actions_menu.xml" value="0.22685185185185186" />
+        <entry key="..\:/AndroidProjects/CodeCanyon/note/MainFile/Note/app/src/main/res/mipmap-anydpi-v26/app_logo.xml" value="0.126" />
+        <entry key="..\:/downloads/codecanyon-YzNUhS0V-note/MainFile/Note/app/src/main/res/layout/activity_main.xml" value="1.128125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

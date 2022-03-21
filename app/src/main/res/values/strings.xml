@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Note</string>
+
+    <string name="application_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="banner_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="search_notes">Search Your Notes</string>
+    <string name="note_title">Note Title</string>
+    <string name="note_subtitle">Note Subtitle</string>
+    <string name="type_note_here">Type note here…</string>
+    <string name="pick_color">Pick Color For Note</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_url">Add URL</string>
+    <string name="enter_url">Enter Url</string>
+    <string name="add">ADD</string>
+    <string name="cancel">CANCEL</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="whoa_you_don_t_have_any_saved_notes_yet">No notes, create now!</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="add_voice_note">Add Voice Note</string>
+    <string name="select_image">Select Image</string>
+    <string name="reading_text">Do you want Note to read the note for you?</string>
+    <string name="stop_reading">CANCEL</string>
+    <string name="start_reading">READ</string>
+    <string name="read_note">Read Note</string>
+    <string name="share_note">Share Note</string>
+</resources>
