@@ -41,6 +41,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.fpt.poromo.Utils;
 import com.fpt.poromo.database.NotesDatabase;
 import com.fpt.poromo.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
