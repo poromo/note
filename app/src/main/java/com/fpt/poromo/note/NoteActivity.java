@@ -1,6 +1,8 @@
 package com.fpt.poromo.note;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
@@ -33,6 +36,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
@@ -89,6 +94,8 @@ public class NoteActivity extends AppCompatActivity {
         loadAdBanner();
         initViews();
         setActionOnViews();
+        // push notification
+        notificationChannel();
 
         selectedNoteColor = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(), R.color.colorDefaultNoteColor) & 0x00ffffff);
         selectedImagePath = "";
@@ -132,6 +139,16 @@ public class NoteActivity extends AppCompatActivity {
         initAddActions();
         initMiscellaneous();
         setSubtitleIndicatorColor();
+    }
+
+    private void notificationChannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(Utils.CHANNEL_ID, Utils.CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(Utils.CHANNEL_DESC);
+
+            NotificationManager managerCompat = getSystemService(NotificationManager.class);
+            managerCompat.createNotificationChannel(channel);
+        }
     }
     
     public void loadAdBanner() {
@@ -212,6 +229,7 @@ public class NoteActivity extends AppCompatActivity {
         }
     }
 
+
     public void saveNote() {
         UIUtil.hideKeyboard(NoteActivity.this);
         if (edtTitle.getText().toString().trim().isEmpty()) {
@@ -238,6 +256,7 @@ public class NoteActivity extends AppCompatActivity {
 
         if (imgNote.getVisibility() == View.VISIBLE) {
             note.setImagePath(selectedImagePath);
+            System.out.println(selectedImagePath + "DEBUG =============3");
         }
 
         if (txtUrl.getVisibility() == View.VISIBLE && imgRemoveURL.getVisibility() == View.VISIBLE) {
@@ -263,6 +282,15 @@ public class NoteActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
+                // create an notification here
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(NoteActivity.this, Utils.CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(Utils.NOTI_TITLE)
+                        .setContentText(Utils.NOTI_CONTENT)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true);
+                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(NoteActivity.this);
+                managerCompat.notify(Utils.NOTI_ID ,builder.build());
             }
         }
 

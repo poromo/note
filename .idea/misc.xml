@@ -65,6 +65,14 @@
         <entry key="..\:/note/app/src/main/res/layout-xxxhdpi/layout_reading_note.xml" value="0.101953125" />
         <entry key="..\:/note/app/src/main/res/layout/activity_note.xml" value="2.2" />
         <entry key="..\:/note/app/src/main/res/layout/layout_reading_note.xml" value="1.0" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="1.1" />
+        <entry key="app/src/main/res/layout/activity_note.xml" value="1.5" />
+        <entry key="app/src/main/res/layout/item_container_note.xml" value="1.4541666666666666" />
+        <entry key="app/src/main/res/layout/layout_add_actions.xml" value="1.4541666666666666" />
+        <entry key="app/src/main/res/layout/layout_add_image.xml" value="1.4541666666666666" />
+        <entry key="app/src/main/res/layout/layout_add_url.xml" value="1.4541666666666666" />
+        <entry key="app/src/main/res/layout/layout_more_action.xml" value="1.8375" />
+        <entry key="app/src/main/res/layout/layout_reading_note.xml" value="1.8375" />
       </map>
     </option>
   </component>
