@@ -1,4 +1,4 @@
-package com.fpt.poromo;
+package com.fpt.poromo.note;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

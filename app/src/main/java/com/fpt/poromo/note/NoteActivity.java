@@ -1,4 +1,4 @@
-package com.fpt.poromo;
+package com.fpt.poromo.note;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -36,6 +36,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.fpt.poromo.database.NotesDatabase;
+import com.fpt.poromo.R;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -83,7 +85,7 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        
+
         loadAdBanner();
         initViews();
         setActionOnViews();

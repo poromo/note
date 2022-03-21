@@ -1,6 +1,9 @@
 package com.fpt.poromo;
 
 import android.annotation.SuppressLint;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.database.Cursor;
@@ -37,6 +40,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.fpt.poromo.database.NotesDatabase;
+import com.fpt.poromo.note.Note;
+import com.fpt.poromo.note.NoteActivity;
+import com.fpt.poromo.note.NoteAdapter;
+import com.fpt.poromo.note.NoteListener;
+import com.fpt.poromo.schedule.SyncJobService;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,9 +68,9 @@ import java.util.Locale;
 
 import maes.tech.intentanim.CustomIntent;
 
-import static android.content.ContentValues.TAG;
-
 public class MainActivity extends AppCompatActivity implements NoteListener {
+
+    private static final String TAG = "MainActivity";
 
     ConstraintLayout contentView;
     ImageView imgEmpty;
@@ -100,9 +109,29 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
 
         initViews();
         setActionOnViews();
-
+        startJob();
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
     }
+
+    public void startJob(){
+        Log.d(TAG, "Start job");
+        ComponentName componentName = new ComponentName(this, SyncJobService.class);
+        JobInfo info = new JobInfo.Builder(123, componentName)
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .setPeriodic(15 * 60 * 1000)
+                .build();
+
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = scheduler.schedule(info);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d(TAG, "Job scheduled");
+        } else {
+            Log.d(TAG, "Job scheduling failed");
+        }
+    }
+
 
     public void initViews() {
         contentView = findViewById(R.id.content_view);

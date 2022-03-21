@@ -1,4 +1,4 @@
-package com.fpt.poromo;
+package com.fpt.poromo.note;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

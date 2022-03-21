@@ -1,4 +1,4 @@
-package com.fpt.poromo;
+package com.fpt.poromo.note;
 
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fpt.poromo.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
