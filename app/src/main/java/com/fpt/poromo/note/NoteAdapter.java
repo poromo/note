@@ -88,7 +88,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         void setNote(Note note) {
             itemNoteTitle.setText(note.getTitle());
-
+            if (note.getSubtitle() == null) {
+                note.setSubtitle("empty subtitle");
+            }
             if (note.getSubtitle().trim().isEmpty()) {
                 itemNoteSubtitle.setVisibility(View.GONE);
             } else {
@@ -101,7 +103,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             if (note.getColor() != null) {
                 gradientDrawable.setColor(Color.parseColor(note.getColor()));
             } else {
-                gradientDrawable.setColor(Color.parseColor(String.valueOf(R.color.colorDefaultNoteColor)));
+                gradientDrawable.setColor(Color.parseColor(String.valueOf("#F4F4F4")));
             }
 
             if (note.getImagePath() != null && !note.getImagePath().isEmpty()) {
