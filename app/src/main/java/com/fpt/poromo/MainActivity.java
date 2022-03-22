@@ -41,6 +41,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.fpt.poromo.database.NotesDatabase;
+import com.fpt.poromo.helper.APIConnection;
+import com.fpt.poromo.helper.APIInterface;
 import com.fpt.poromo.note.Note;
 import com.fpt.poromo.note.NoteActivity;
 import com.fpt.poromo.note.NoteAdapter;
@@ -62,11 +64,16 @@ import com.tapadoo.alerter.Alerter;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import maes.tech.intentanim.CustomIntent;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements NoteListener {
 
@@ -81,6 +88,15 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
     FloatingActionButton fabAddNote;
 
     List<Note> listNote;
+
+    public List<Note> getListNote() {
+        return listNote;
+    }
+
+    public void setListNote(List<Note> listNote) {
+        this.listNote = listNote;
+    }
+
     NoteAdapter noteAdapter;
 
     public static final int REQUEST_CODE_ADD_NOTE = 1;
@@ -312,6 +328,16 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
         dialogAddURL.show();
     }
 
+    public List<Note> getAllNotes() throws IOException {
+        Retrofit retro = APIConnection.getClient();
+        APIInterface service = retro.create(APIInterface.class);
+
+        Call<List<Note>> call = service.getAllNotes(Utils.DEFAULT_USR_ID);
+
+        Response<List<Note>> list = call.execute();
+        return list.body();
+    }
+
     public void getNotes(final int requestCode, final boolean isNoteDeleted) {
 
         @SuppressLint("StaticFieldLeak")
@@ -319,9 +345,15 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
 
             @Override
             protected List<Note> doInBackground(Void... voids) {
-                return NotesDatabase
+                List<Note> listNotes = NotesDatabase
                         .getDatabase(getApplicationContext())
                         .noteDao().getAllNotes();
+                try {
+                    listNotes = getAllNotes();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return listNotes;
             }
 
             @Override
