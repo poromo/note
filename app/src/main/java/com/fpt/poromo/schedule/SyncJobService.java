@@ -1,10 +1,22 @@
 package com.fpt.poromo.schedule;
 
+import android.annotation.SuppressLint;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
+import com.fpt.poromo.database.NotesDatabase;
+import com.fpt.poromo.helper.APIConnection;
+import com.fpt.poromo.helper.APIInterface;
+import com.fpt.poromo.note.Note;
+import com.fpt.poromo.note.NoteDao;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,9 +25,12 @@ import retrofit2.Response;
 public class SyncJobService extends JobService {
     private static final String TAG = "SyncJobService";
     private boolean jobCancelled = false;
+    APIInterface apiInterface = null;
 
     @Override
     public boolean onStartJob(JobParameters params) {
+        apiInterface = APIConnection.getClient().create(APIInterface.class);
+
         Log.d(TAG, "Job started");
         doBackgroundWork(params);
 
@@ -29,6 +44,18 @@ public class SyncJobService extends JobService {
                 while (!jobCancelled) {
                     Log.d(TAG, "Syncing........");
                     try {
+                        syncDataToDb();
+                    }catch (Exception ex){
+                        Log.d(TAG, "Sync data to db failed");
+                    }
+                    try {
+                        syncDataToServer();
+                    }catch (Exception ex){
+                        Log.d(TAG, "Sync data to server failed");
+                    }
+
+
+                    try {
                         Thread.sleep(30000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -36,6 +63,61 @@ public class SyncJobService extends JobService {
                 }
             }
         }).start();
+    }
+
+    private void syncDataToDb(){
+        Call<List<Note>> call = apiInterface.getNotesByUserId(1);
+        call.enqueue(new Callback<List<Note>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<List<Note>> call, Response<List<Note>> response) {
+                Log.d(TAG, "Call API success");
+                List<Note> notes = response.body();
+                Log.d(TAG, "Data: "+Arrays.toString(notes.toArray()));
+                Note[] noteArr = notes.toArray(new Note[0]);
+                Log.d(TAG, "Array size: "+ noteArr.length);
+                try {
+                    NotesDatabase
+                            .getDatabase(getApplicationContext())
+                            .noteDao().insertAllNote(noteArr);
+                    Log.d(TAG, "Save to db success");
+                }catch (Exception ex){
+                    Log.d(TAG, "Save to db failed: "+ ex.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Note>> call, Throwable t) {
+                Log.d(TAG, "Call API failed");
+                call.cancel();
+            }
+        });
+    }
+
+    private void syncDataToServer(){
+        List<Note> noteList = NotesDatabase
+                .getDatabase(getApplicationContext())
+                .noteDao().getAllNotesNotSync();
+        List<Note> allNote = NotesDatabase.getDatabase(getApplicationContext()).noteDao().getAllNotes();
+        if(noteList.isEmpty()){
+            Log.d(TAG, "No data to sync");
+        }else {
+            Log.d(TAG, "Start sync "+ noteList.size()+" note");
+            Call<List<Note>> call = apiInterface.sendNotesToServer(noteList);
+            call.enqueue(new Callback<List<Note>>() {
+                @Override
+                public void onResponse(Call<List<Note>> call, Response<List<Note>> response) {
+                    Log.d(TAG, "Sync success");
+                }
+
+                @Override
+                public void onFailure(Call<List<Note>> call, Throwable t) {
+                    Log.d(TAG, "Sync failed: " + t.toString());
+                    call.cancel();
+                }
+            });
+        }
     }
 
     @Override
