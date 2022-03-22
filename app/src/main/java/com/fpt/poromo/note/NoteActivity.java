@@ -19,6 +19,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -44,6 +45,8 @@ import com.bumptech.glide.Glide;
 import com.fpt.poromo.Utils;
 import com.fpt.poromo.database.NotesDatabase;
 import com.fpt.poromo.R;
+import com.fpt.poromo.helper.APIConnection;
+import com.fpt.poromo.helper.APIInterface;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -61,8 +64,13 @@ import java.util.Date;
 import java.util.Locale;
 
 import maes.tech.intentanim.CustomIntent;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NoteActivity extends AppCompatActivity {
+
+    private static final String TAG = "NoteActivity";
 
     ImageButton imgBack, imgSave, imgRemoveURL, imgRemove, imgAdd, imgMoreAction;
     View viewSubtitleIndicator;
@@ -724,6 +732,19 @@ public class NoteActivity extends AppCompatActivity {
                         protected Void doInBackground(Void... voids) {
                             NotesDatabase.getDatabase(getApplicationContext()).noteDao()
                                     .deleteNote(alreadyAvailableNote);
+                            Call<Note> noteCall = APIConnection.getClient().create(APIInterface.class).deleteNoteById(alreadyAvailableNote.getId());
+                            noteCall.enqueue(new Callback<Note>() {
+                                @Override
+                                public void onResponse(Call<Note> call, Response<Note> response) {
+                                    Log.d(TAG, "Delete note: "+ response.body().toString()+" success");
+                                }
+
+                                @Override
+                                public void onFailure(Call<Note> call, Throwable t) {
+                                    Log.d(TAG, "Can not delete note in server: "+ t.getMessage());
+                                    call.cancel();
+                                }
+                            });
                             return null;
                         }
 

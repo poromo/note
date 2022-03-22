@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -18,4 +19,7 @@ public interface APIInterface {
 
     @GET("note?")
     Call<List<Note>> getNotesByUserId(@Query("user_id") Integer userId);
+
+    @DELETE("note?")
+    Call<Note> deleteNoteById(@Query("localId") Integer id);
 }
