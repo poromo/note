@@ -21,5 +21,5 @@ public interface APIInterface {
     Call<List<Note>> getNotesByUserId(@Query("user_id") Integer userId);
 
     @DELETE("note?")
-    Call<Note> deleteNoteById(@Query("localId") Integer id);
+    Call<Note> deleteNoteById(@Query("localId") Integer id, @Query("user_id")Integer userId);
 }

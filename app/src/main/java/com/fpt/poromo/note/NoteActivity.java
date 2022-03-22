@@ -732,7 +732,7 @@ public class NoteActivity extends AppCompatActivity {
                         protected Void doInBackground(Void... voids) {
                             NotesDatabase.getDatabase(getApplicationContext()).noteDao()
                                     .deleteNote(alreadyAvailableNote);
-                            Call<Note> noteCall = APIConnection.getClient().create(APIInterface.class).deleteNoteById(alreadyAvailableNote.getId());
+                            Call<Note> noteCall = APIConnection.getClient().create(APIInterface.class).deleteNoteById(alreadyAvailableNote.getId(), 1);
                             noteCall.enqueue(new Callback<Note>() {
                                 @Override
                                 public void onResponse(Call<Note> call, Response<Note> response) {
