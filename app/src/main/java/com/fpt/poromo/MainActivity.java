@@ -328,15 +328,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
         dialogAddURL.show();
     }
 
-    public List<Note> getAllNotes() throws IOException {
-        Retrofit retro = APIConnection.getClient();
-        APIInterface service = retro.create(APIInterface.class);
-
-        Call<List<Note>> call = service.getNotesByUserId(Utils.DEFAULT_USR_ID);
-
-        Response<List<Note>> list = call.execute();
-        return list.body();
-    }
 
     public void getNotes(final int requestCode, final boolean isNoteDeleted) {
 
@@ -348,11 +339,6 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
                 List<Note> listNotes = NotesDatabase
                         .getDatabase(getApplicationContext())
                         .noteDao().getAllNotes();
-                try {
-                    listNotes = getAllNotes();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 return listNotes;
             }
 

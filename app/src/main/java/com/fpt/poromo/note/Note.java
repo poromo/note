@@ -47,6 +47,9 @@ public class Note implements Serializable {
     @SerializedName("web_link")
     public String webLink;
 
+    @SerializedName("created_by")
+    public Integer createdBy;
+
     public int getId() {
         return id;
     }
@@ -117,6 +120,14 @@ public class Note implements Serializable {
 
     public void setIsSync(Integer isSync) {
         this.isSync = isSync;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override

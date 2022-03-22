@@ -72,20 +72,20 @@ public class SyncJobService extends JobService {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(Call<List<Note>> call, Response<List<Note>> response) {
-                Log.d(TAG, "Call API success");
+                Log.d(TAG, "syncDataToDb => Call API success");
                 List<Note> notes = response.body();
                 notes.forEach(note -> note.setIsSync(1));
-                Log.d(TAG, "Data: "+Arrays.toString(notes.toArray()));
+                Log.d(TAG, "syncDataToDb => Data: "+Arrays.toString(notes.toArray()));
                 Note[] noteArr = notes.toArray(new Note[0]);
 
-                Log.d(TAG, "Array size: "+ noteArr.length);
+                Log.d(TAG, "syncDataToDb => Array size: "+ noteArr.length);
                 try {
                     NotesDatabase
                             .getDatabase(getApplicationContext())
                             .noteDao().insertAllNote(noteArr);
-                    Log.d(TAG, "Save to db success");
+                    Log.d(TAG, "syncDataToDb => Save to db success");
                 }catch (Exception ex){
-                    Log.d(TAG, "Save to db failed: "+ ex.getMessage());
+                    Log.d(TAG, "syncDataToDb => Save to db failed: "+ ex.getMessage());
                 }
 
             }
@@ -103,23 +103,25 @@ public class SyncJobService extends JobService {
         List<Note> noteList = NotesDatabase
                 .getDatabase(getApplicationContext())
                 .noteDao().getAllNotesNotSync();
-        Log.d(TAG, "List note to sync:"+ noteList.toArray().toString());
+        Log.d(TAG, "syncDataToServer => List note to sync:"+ Arrays.toString(noteList.toArray()));
         if(noteList.isEmpty()){
-            Log.d(TAG, "No data to sync");
+            Log.d(TAG, "syncDataToServer => No data to sync");
         }else {
             //change is_sync status
-            noteList.forEach(note -> note.setIsSync(1));
-            Log.d(TAG, "Start sync "+ noteList.size()+" note");
-            Call<List<Note>> call = apiInterface.sendNotesToServer(noteList);
-            call.enqueue(new Callback<List<Note>>() {
+            noteList.forEach(note -> {note.setIsSync(1); note.setCreatedBy(1);});
+
+            Log.d(TAG, "syncDataToServer => Start sync "+ noteList.size()+" note");
+            Call<Note[]> call = apiInterface.sendNotesToServer(noteList.toArray(new Note[0]));
+            call.enqueue(new Callback<Note[]>() {
                 @Override
-                public void onResponse(Call<List<Note>> call, Response<List<Note>> response) {
-                    Log.d(TAG, "Sync success");
+                public void onResponse(Call<Note[]> call, Response<Note[]> response) {
+                    NotesDatabase.getDatabase(getApplicationContext()).noteDao().insertAllNote(noteList.toArray(new Note[0]));
+                    Log.d(TAG, "syncDataToServer => Sync success");
                 }
 
                 @Override
-                public void onFailure(Call<List<Note>> call, Throwable t) {
-                    Log.d(TAG, "Sync failed: " + t.toString());
+                public void onFailure(Call<Note[]> call, Throwable t) {
+                    Log.d(TAG, "syncDataToServer => Sync failed: " + t.toString());
                     call.cancel();
                 }
             });
