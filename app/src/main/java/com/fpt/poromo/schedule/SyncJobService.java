@@ -39,6 +39,7 @@ public class SyncJobService extends JobService {
 
     private void doBackgroundWork(final JobParameters params) {
         new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void run() {
                 while (!jobCancelled) {
@@ -73,8 +74,10 @@ public class SyncJobService extends JobService {
             public void onResponse(Call<List<Note>> call, Response<List<Note>> response) {
                 Log.d(TAG, "Call API success");
                 List<Note> notes = response.body();
+                notes.forEach(note -> note.setIsSync(1));
                 Log.d(TAG, "Data: "+Arrays.toString(notes.toArray()));
                 Note[] noteArr = notes.toArray(new Note[0]);
+
                 Log.d(TAG, "Array size: "+ noteArr.length);
                 try {
                     NotesDatabase
@@ -95,14 +98,17 @@ public class SyncJobService extends JobService {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void syncDataToServer(){
         List<Note> noteList = NotesDatabase
                 .getDatabase(getApplicationContext())
                 .noteDao().getAllNotesNotSync();
-        List<Note> allNote = NotesDatabase.getDatabase(getApplicationContext()).noteDao().getAllNotes();
+        Log.d(TAG, "List note to sync:"+ noteList.toArray().toString());
         if(noteList.isEmpty()){
             Log.d(TAG, "No data to sync");
         }else {
+            //change is_sync status
+            noteList.forEach(note -> note.setIsSync(1));
             Log.d(TAG, "Start sync "+ noteList.size()+" note");
             Call<List<Note>> call = apiInterface.sendNotesToServer(noteList);
             call.enqueue(new Callback<List<Note>>() {

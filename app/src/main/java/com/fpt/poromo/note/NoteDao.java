@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface NoteDao {
 
-    @Query("SELECT * FROM notes WHERE is_sync = 1 ORDER BY id DESC")
+    @Query("SELECT * FROM notes WHERE is_sync = 0 ORDER BY id DESC")
     List<Note> getAllNotesNotSync();
 
     @Query("SELECT * FROM notes ORDER BY id DESC")

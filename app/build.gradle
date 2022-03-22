@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.envato.codecanyon"
+        applicationId "com.fpt.poromo"
         minSdkVersion 21
         targetSdkVersion 31
         multiDexEnabled true

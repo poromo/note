@@ -332,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
         Retrofit retro = APIConnection.getClient();
         APIInterface service = retro.create(APIInterface.class);
 
-        Call<List<Note>> call = service.getAllNotes(Utils.DEFAULT_USR_ID);
+        Call<List<Note>> call = service.getNotesByUserId(Utils.DEFAULT_USR_ID);
 
         Response<List<Note>> list = call.execute();
         return list.body();
