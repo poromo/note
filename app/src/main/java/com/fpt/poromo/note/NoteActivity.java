@@ -103,7 +103,6 @@ public class NoteActivity extends AppCompatActivity {
         loadAdBanner();
         initViews();
         setActionOnViews();
-        // push notification
         notificationChannel();
 
         selectedNoteColor = "#" + Integer.toHexString(ContextCompat.getColor(getApplicationContext(), R.color.colorDefaultNoteColor) & 0x00ffffff);
@@ -243,7 +242,7 @@ public class NoteActivity extends AppCompatActivity {
         UIUtil.hideKeyboard(NoteActivity.this);
         if (edtTitle.getText().toString().trim().isEmpty()) {
             Alerter.create(NoteActivity.this)
-                    .setText("Note Title empty!")
+                    .setText(Utils.TITLE_IS_NOT_EMPTY)
                     .setTextAppearance(R.style.ErrorAlert)
                     .setBackgroundColorRes(R.color.warningColor)
                     .setIcon(R.drawable.ic_error)
@@ -291,15 +290,6 @@ public class NoteActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
-                // create an notification here
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(NoteActivity.this, Utils.CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(Utils.NOTI_TITLE)
-                        .setContentText(Utils.NOTI_CONTENT)
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setAutoCancel(true);
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(NoteActivity.this);
-                managerCompat.notify(Utils.NOTI_ID ,builder.build());
             }
         }
 
@@ -589,7 +579,7 @@ public class NoteActivity extends AppCompatActivity {
                 UIUtil.hideKeyboard(NoteActivity.this);
                 bottomSheetMiscellaneous.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 Alerter.create(NoteActivity.this)
-                        .setText("Whoops! There's nothing to read!")
+                        .setText(Utils.THERE_NOTHING_TO_READ)
                         .setTextAppearance(R.style.ErrorAlert)
                         .setBackgroundColorRes(R.color.warningColor)
                         .setIcon(R.drawable.ic_error)
@@ -631,7 +621,7 @@ public class NoteActivity extends AppCompatActivity {
                 UIUtil.hideKeyboard(NoteActivity.this);
                 bottomSheetMiscellaneous.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 Alerter.create(NoteActivity.this)
-                        .setText("Whoops! There's nothing to share!")
+                        .setText(Utils.THERE_NOTHING_TO_SHARE)
                         .setTextAppearance(R.style.ErrorAlert)
                         .setBackgroundColorRes(R.color.warningColor)
                         .setIcon(R.drawable.ic_error)
@@ -732,7 +722,8 @@ public class NoteActivity extends AppCompatActivity {
                         protected Void doInBackground(Void... voids) {
                             NotesDatabase.getDatabase(getApplicationContext()).noteDao()
                                     .deleteNote(alreadyAvailableNote);
-                            Call<Note> noteCall = APIConnection.getClient().create(APIInterface.class).deleteNoteById(alreadyAvailableNote.getId(), 1);
+                            Call<Note> noteCall = APIConnection.getClient().create(APIInterface.class)
+                                    .deleteNoteById(alreadyAvailableNote.getId(), 1);
                             noteCall.enqueue(new Callback<Note>() {
                                 @Override
                                 public void onResponse(Call<Note> call, Response<Note> response) {
@@ -754,9 +745,12 @@ public class NoteActivity extends AppCompatActivity {
                             Intent intent = new Intent();
                             intent.putExtra("isNoteDeleted", true);
                             setResult(RESULT_OK, intent);
+                            showNoti();
                             finish();
                         }
                     }
+
+
 
                     new DeleteNoteTask().execute();
                     dialogInterface.dismiss();
@@ -764,6 +758,17 @@ public class NoteActivity extends AppCompatActivity {
                 .setNegativeButton("Cancel", R.drawable.ic_material_dialog_cancel, (dialogInterface, which) -> dialogInterface.dismiss())
                 .build();
         materialDialog.show();
+    }
+
+    private void showNoti() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(NoteActivity.this, Utils.CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(Utils.NOTI_TITLE)
+                .setContentText(Utils.NOTI_CONTENT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(NoteActivity.this);
+        managerCompat.notify(Utils.NOTI_ID ,builder.build());
     }
 
     @SuppressLint("ResourceType")

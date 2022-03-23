@@ -1,6 +1,8 @@
 package com.fpt.poromo;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
@@ -36,6 +38,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
         initViews();
         setActionOnViews();
         startJob();
+        notificationChannel();
         getNotes(REQUEST_CODE_SHOW_NOTES, false);
     }
 
@@ -328,6 +333,16 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
         dialogAddURL.show();
     }
 
+    private void notificationChannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(Utils.CHANNEL_ID, Utils.CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(Utils.CHANNEL_DESC);
+
+            NotificationManager managerCompat = getSystemService(NotificationManager.class);
+            managerCompat.createNotificationChannel(channel);
+        }
+    }
+
 
     public void getNotes(final int requestCode, final boolean isNoteDeleted) {
 
@@ -472,12 +487,27 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
                         protected Void doInBackground(Void... voids) {
                             NotesDatabase.getDatabase(getApplicationContext()).noteDao()
                                     .deleteNote(note);
+                            Call<Note> noteCall = APIConnection.getClient().create(APIInterface.class)
+                                    .deleteNoteById(note.getId(), 1);
+                            noteCall.enqueue(new Callback<Note>() {
+                                @Override
+                                public void onResponse(Call<Note> call, Response<Note> response) {
+                                    Log.d(TAG, "Delete note: "+ response.body().toString()+" success");
+                                }
+
+                                @Override
+                                public void onFailure(Call<Note> call, Throwable t) {
+                                    Log.d(TAG, "Can not delete note in server: "+ t.getMessage());
+                                    call.cancel();
+                                }
+                            });
                             return null;
                         }
 
                         @Override
                         protected void onPostExecute(Void aVoid) {
                             super.onPostExecute(aVoid);
+                            showNoti();
                             listNote.remove(noteClickedPosition);
                             noteAdapter.notifyItemRemoved(noteClickedPosition);
 
@@ -498,6 +528,18 @@ public class MainActivity extends AppCompatActivity implements NoteListener {
                 .build();
         materialDialog.show();
     }
+
+    private void showNoti() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, Utils.CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(Utils.NOTI_TITLE)
+                .setContentText(Utils.NOTI_CONTENT)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+        managerCompat.notify(Utils.NOTI_ID ,builder.build());
+    }
+
 
     @Override
     protected void onStart() {
